@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mylinx - Embed Player</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/CDNSFree2/Plyr/plyr.css" />
+  </head>
+
+  <div class="container"></div>
+
+  <script src="https://unpkg.com/plyr@3/dist/plyr.min.js"></script>
+
+  <script>
+    // extract the provider and id from url search param
+    const url = window.location.href;
+    const urlParams = new URLSearchParams(new URL(url).search);
+    const provider = urlParams.get("provider");
+    const id = urlParams.get("id");
+    const autoplay = urlParams.get('autoplay');
+    
+    const playerDiv = document.createElement("div");
+
+    playerDiv.id = "player";
+
+    playerDiv.setAttribute("data-plyr-provider", provider.toLowerCase());
+    playerDiv.setAttribute("data-plyr-embed-id", id);
+
+    const container = document.querySelector(".container");
+
+    container.appendChild(playerDiv);
+
+    if (autoplay === "true") {
+      const player = new Plyr("#player", {
+        volume: 0,
+        autoplay: true,
+        muted: true
+      });
+    } else {
+      const player = new Plyr("#player", {});
+    }
+
+    // Expose player so it can be used from the console
+    window.player = player;
+  </script>
+  <style>
+    .container {
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    html {
+      background: #111111;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    }
+    body {
+      margin: 0;
+    }
+
+    :root {
+      --plyr-color-main: #10b981;
+      --plyr-video-control-color: white;
+    }
+  </style>
+</html>
