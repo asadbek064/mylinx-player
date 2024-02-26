@@ -16,7 +16,9 @@
     const provider = urlParams.get("provider");
     const id = urlParams.get("id");
     const autoplay = urlParams.get('autoplay');
-    
+    const mute = urlParams.get('mute');
+
+    console.log(provider, id, autoplay ,mute);
     const playerDiv = document.createElement("div");
 
     playerDiv.id = "player";
@@ -32,7 +34,7 @@
       const player = new Plyr("#player", {
         volume: 0,
         autoplay: true,
-        muted: true
+        muted: (mute === "true")
       });
     } else {
       const player = new Plyr("#player", {});
@@ -42,13 +44,18 @@
     window.player = player;
   </script>
   <style>
+
     .container {
       margin: 0 auto;
       max-width: 100%;
     }
 
-    html {
-      background: #111111;
+    .plyr--video {
+      border-radius: 0.375rem!important;
+    }
+
+    html,body {
+      background: transparent;
       font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
     }
     body {
